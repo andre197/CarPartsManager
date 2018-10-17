@@ -17,7 +17,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -32,6 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,6 +46,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Base\BaseControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Base\BaseControl.Designer.cs">
+      <DependentUpon>BaseControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Base\IValidationRule.cs" />
+    <Compile Include="Base\Validator.cs" />
+    <Compile Include="Controls\AddEditPartsControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AddEditPartsControl.Designer.cs">
+      <DependentUpon>AddEditPartsControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AddMakerControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AddMakerControl.Designer.cs">
+      <DependentUpon>AddMakerControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\AddModelControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\AddModelControl.Designer.cs">
+      <DependentUpon>AddModelControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="GeneralForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GeneralForm.Designer.cs">
+      <DependentUpon>GeneralForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -53,6 +86,26 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validations\ComboboxSelectedItemValidationRule.cs" />
+    <Compile Include="Validations\CreationYearValidationRule.cs" />
+    <Compile Include="Validations\StringNullOrEmptyValidationRule.cs" />
+    <Compile Include="Validations\UniqueMakerNameValidationRule.cs" />
+    <Compile Include="Validations\UniqueNumberValidationRule.cs" />
+    <EmbeddedResource Include="Controls\AddEditPartsControl.resx">
+      <DependentUpon>AddEditPartsControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\AddMakerControl.resx">
+      <DependentUpon>AddMakerControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\AddModelControl.resx">
+      <DependentUpon>AddModelControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GeneralForm.resx">
+      <DependentUpon>GeneralForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainView.resx">
+      <DependentUpon>MainView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -61,7 +114,9 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="Properties\DataSources\CarPartsManager.Logic.Helpers.CarPartsViewHelper.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -75,5 +130,28 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CarPartsManager.DAL\CarPartsManager.DAL.csproj">
+      <Project>{A817E829-FCFF-4C5A-9AE7-4B979A389D04}</Project>
+      <Name>CarPartsManager.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\CarPartsManager.Logic\CarPartsManager.Logic.csproj">
+      <Project>{8f80789b-05f7-4404-af05-a68c660d1c97}</Project>
+      <Name>CarPartsManager.Logic</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\info_button.png" />
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

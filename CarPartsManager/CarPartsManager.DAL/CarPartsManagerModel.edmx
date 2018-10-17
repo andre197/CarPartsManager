@@ -1,0 +1,261 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CarPartsManagerModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CarMakers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarMakerName" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarModels">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ModelName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="CreationDate" Type="datetime" Nullable="false" />
+          <Property Name="CardMakerId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarParts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PartName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="UniqueNumber" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="CarModelId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarPartSchemes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Scheme" Type="varbinary(max)" Nullable="false" />
+          <Property Name="CarPartId" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__CarModels__CardM__2F10007B">
+          <End Role="CarMakers" Type="Self.CarMakers" Multiplicity="1" />
+          <End Role="CarModels" Type="Self.CarModels" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarMakers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarModels">
+              <PropertyRef Name="CardMakerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarParts__CarMod__31EC6D26">
+          <End Role="CarModels" Type="Self.CarModels" Multiplicity="1" />
+          <End Role="CarParts" Type="Self.CarParts" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarModels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarParts">
+              <PropertyRef Name="CarModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarPartSc__CarPa__34C8D9D1">
+          <End Role="CarParts" Type="Self.CarParts" Multiplicity="1" />
+          <End Role="CarPartSchemes" Type="Self.CarPartSchemes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarParts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarPartSchemes">
+              <PropertyRef Name="CarPartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CarPartsManagerModelStoreContainer">
+          <EntitySet Name="CarMakers" EntityType="Self.CarMakers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarModels" EntityType="Self.CarModels" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarParts" EntityType="Self.CarParts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarPartSchemes" EntityType="Self.CarPartSchemes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CarModels__CardM__2F10007B" Association="Self.FK__CarModels__CardM__2F10007B">
+            <End Role="CarMakers" EntitySet="CarMakers" />
+            <End Role="CarModels" EntitySet="CarModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarParts__CarMod__31EC6D26" Association="Self.FK__CarParts__CarMod__31EC6D26">
+            <End Role="CarModels" EntitySet="CarModels" />
+            <End Role="CarParts" EntitySet="CarParts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarPartSc__CarPa__34C8D9D1" Association="Self.FK__CarPartSc__CarPa__34C8D9D1">
+            <End Role="CarParts" EntitySet="CarParts" />
+            <End Role="CarPartSchemes" EntitySet="CarPartSchemes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CarPartsManagerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CarMaker">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarMakerName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CarModels" Relationship="Self.FK__CarModels__CardM__2F10007B" FromRole="CarMakers" ToRole="CarModels" />
+        </EntityType>
+        <EntityType Name="CarModel">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ModelName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CreationDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CardMakerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CarMaker" Relationship="Self.FK__CarModels__CardM__2F10007B" FromRole="CarModels" ToRole="CarMakers" />
+          <NavigationProperty Name="CarParts" Relationship="Self.FK__CarParts__CarMod__31EC6D26" FromRole="CarModels" ToRole="CarParts" />
+        </EntityType>
+        <EntityType Name="CarPart">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PartName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="UniqueNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CarModelId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CarModel" Relationship="Self.FK__CarParts__CarMod__31EC6D26" FromRole="CarParts" ToRole="CarModels" />
+          <NavigationProperty Name="CarPartSchemes" Relationship="Self.FK__CarPartSc__CarPa__34C8D9D1" FromRole="CarParts" ToRole="CarPartSchemes" />
+        </EntityType>
+        <EntityType Name="CarPartScheme">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Scheme" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="CarPartId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CarPart" Relationship="Self.FK__CarPartSc__CarPa__34C8D9D1" FromRole="CarPartSchemes" ToRole="CarParts" />
+        </EntityType>
+        <Association Name="FK__CarModels__CardM__2F10007B">
+          <End Role="CarMakers" Type="CarPartsManagerModel.CarMaker" Multiplicity="1" />
+          <End Role="CarModels" Type="CarPartsManagerModel.CarModel" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarMakers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarModels">
+              <PropertyRef Name="CardMakerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarParts__CarMod__31EC6D26">
+          <End Role="CarModels" Type="CarPartsManagerModel.CarModel" Multiplicity="1" />
+          <End Role="CarParts" Type="CarPartsManagerModel.CarPart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarModels">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarParts">
+              <PropertyRef Name="CarModelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarPartSc__CarPa__34C8D9D1">
+          <End Role="CarParts" Type="CarPartsManagerModel.CarPart" Multiplicity="1" />
+          <End Role="CarPartSchemes" Type="CarPartsManagerModel.CarPartScheme" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarParts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CarPartSchemes">
+              <PropertyRef Name="CarPartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CarPartsManagerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CarMakers" EntityType="CarPartsManagerModel.CarMaker" />
+          <EntitySet Name="CarModels" EntityType="CarPartsManagerModel.CarModel" />
+          <EntitySet Name="CarParts" EntityType="CarPartsManagerModel.CarPart" />
+          <EntitySet Name="CarPartSchemes" EntityType="CarPartsManagerModel.CarPartScheme" />
+          <AssociationSet Name="FK__CarModels__CardM__2F10007B" Association="Self.FK__CarModels__CardM__2F10007B">
+            <End Role="CarMakers" EntitySet="CarMakers" />
+            <End Role="CarModels" EntitySet="CarModels" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarParts__CarMod__31EC6D26" Association="Self.FK__CarParts__CarMod__31EC6D26">
+            <End Role="CarModels" EntitySet="CarModels" />
+            <End Role="CarParts" EntitySet="CarParts" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarPartSc__CarPa__34C8D9D1" Association="Self.FK__CarPartSc__CarPa__34C8D9D1">
+            <End Role="CarParts" EntitySet="CarParts" />
+            <End Role="CarPartSchemes" EntitySet="CarPartSchemes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CarPartsManagerModelStoreContainer" CdmEntityContainer="CarPartsManagerEntities">
+          <EntitySetMapping Name="CarMakers">
+            <EntityTypeMapping TypeName="CarPartsManagerModel.CarMaker">
+              <MappingFragment StoreEntitySet="CarMakers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CarMakerName" ColumnName="CarMakerName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarModels">
+            <EntityTypeMapping TypeName="CarPartsManagerModel.CarModel">
+              <MappingFragment StoreEntitySet="CarModels">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ModelName" ColumnName="ModelName" />
+                <ScalarProperty Name="CreationDate" ColumnName="CreationDate" />
+                <ScalarProperty Name="CardMakerId" ColumnName="CardMakerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarParts">
+            <EntityTypeMapping TypeName="CarPartsManagerModel.CarPart">
+              <MappingFragment StoreEntitySet="CarParts">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="PartName" ColumnName="PartName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UniqueNumber" ColumnName="UniqueNumber" />
+                <ScalarProperty Name="CarModelId" ColumnName="CarModelId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarPartSchemes">
+            <EntityTypeMapping TypeName="CarPartsManagerModel.CarPartScheme">
+              <MappingFragment StoreEntitySet="CarPartSchemes">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Scheme" ColumnName="Scheme" />
+                <ScalarProperty Name="CarPartId" ColumnName="CarPartId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
