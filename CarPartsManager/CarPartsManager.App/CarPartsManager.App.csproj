@@ -110,6 +110,9 @@
     <EmbeddedResource Include="Controls\AddModelControl.resx">
       <DependentUpon>AddModelControl.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\DetailsControl.resx">
+      <DependentUpon>DetailsControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="GeneralForm.resx">
       <DependentUpon>GeneralForm.cs</DependentUpon>
     </EmbeddedResource>

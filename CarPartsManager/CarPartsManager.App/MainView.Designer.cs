@@ -46,14 +46,14 @@
             this.toolTipAddButton = new System.Windows.Forms.ToolTip(this.components);
             this.panelSearch = new System.Windows.Forms.Panel();
             this.groupBoxFilter = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBoxUniqueNumber = new System.Windows.Forms.TextBox();
-            this.textBoxPartType = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBoxModel = new System.Windows.Forms.TextBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.textBoxMaker = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.textBoxModel = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBoxPartType = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBoxUniqueNumber = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -172,6 +172,7 @@
             this.buttonDetails.Size = new System.Drawing.Size(27, 27);
             this.buttonDetails.TabIndex = 3;
             this.buttonDetails.UseVisualStyleBackColor = true;
+            this.buttonDetails.Click += new System.EventHandler(this.buttonDetails_Click);
             this.buttonDetails.MouseLeave += new System.EventHandler(this.buttonDetails_MouseLeave);
             this.buttonDetails.MouseHover += new System.EventHandler(this.buttonDetails_MouseHover);
             // 
@@ -242,39 +243,22 @@
             this.groupBoxFilter.TabStop = false;
             this.groupBoxFilter.Text = "Търсене:";
             // 
-            // label1
+            // textBoxMaker
             // 
-            this.label1.Location = new System.Drawing.Point(40, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(100, 38);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Уникален номер:";
+            this.textBoxMaker.Location = new System.Drawing.Point(424, 60);
+            this.textBoxMaker.Name = "textBoxMaker";
+            this.textBoxMaker.Size = new System.Drawing.Size(100, 22);
+            this.textBoxMaker.TabIndex = 9;
+            this.textBoxMaker.Tag = "MakerName";
+            this.textBoxMaker.TextChanged += new System.EventHandler(this.textBoxUniqueNumber_TextChanged);
             // 
-            // textBoxUniqueNumber
+            // label5
             // 
-            this.textBoxUniqueNumber.Location = new System.Drawing.Point(43, 60);
-            this.textBoxUniqueNumber.Name = "textBoxUniqueNumber";
-            this.textBoxUniqueNumber.Size = new System.Drawing.Size(100, 22);
-            this.textBoxUniqueNumber.TabIndex = 1;
-            this.textBoxUniqueNumber.Tag = "PartUniqueNumber";
-            this.textBoxUniqueNumber.TextChanged += new System.EventHandler(this.textBoxUniqueNumber_TextChanged);
-            // 
-            // textBoxPartType
-            // 
-            this.textBoxPartType.Location = new System.Drawing.Point(176, 60);
-            this.textBoxPartType.Name = "textBoxPartType";
-            this.textBoxPartType.Size = new System.Drawing.Size(100, 22);
-            this.textBoxPartType.TabIndex = 3;
-            this.textBoxPartType.Tag = "PartName";
-            this.textBoxPartType.TextChanged += new System.EventHandler(this.textBoxUniqueNumber_TextChanged);
-            // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(173, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(100, 38);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Тип част:";
+            this.label5.Location = new System.Drawing.Point(421, 18);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(100, 38);
+            this.label5.TabIndex = 8;
+            this.label5.Text = "Марка:";
             // 
             // textBoxModel
             // 
@@ -293,22 +277,39 @@
             this.label4.TabIndex = 6;
             this.label4.Text = "Модел:";
             // 
-            // textBoxMaker
+            // textBoxPartType
             // 
-            this.textBoxMaker.Location = new System.Drawing.Point(424, 60);
-            this.textBoxMaker.Name = "textBoxMaker";
-            this.textBoxMaker.Size = new System.Drawing.Size(100, 22);
-            this.textBoxMaker.TabIndex = 9;
-            this.textBoxMaker.Tag = "MakerName";
-            this.textBoxMaker.TextChanged += new System.EventHandler(this.textBoxUniqueNumber_TextChanged);
+            this.textBoxPartType.Location = new System.Drawing.Point(176, 60);
+            this.textBoxPartType.Name = "textBoxPartType";
+            this.textBoxPartType.Size = new System.Drawing.Size(100, 22);
+            this.textBoxPartType.TabIndex = 3;
+            this.textBoxPartType.Tag = "PartName";
+            this.textBoxPartType.TextChanged += new System.EventHandler(this.textBoxUniqueNumber_TextChanged);
             // 
-            // label5
+            // label2
             // 
-            this.label5.Location = new System.Drawing.Point(421, 18);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(100, 38);
-            this.label5.TabIndex = 8;
-            this.label5.Text = "Марка:";
+            this.label2.Location = new System.Drawing.Point(173, 18);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(100, 38);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "Тип част:";
+            // 
+            // textBoxUniqueNumber
+            // 
+            this.textBoxUniqueNumber.Location = new System.Drawing.Point(43, 60);
+            this.textBoxUniqueNumber.Name = "textBoxUniqueNumber";
+            this.textBoxUniqueNumber.Size = new System.Drawing.Size(100, 22);
+            this.textBoxUniqueNumber.TabIndex = 1;
+            this.textBoxUniqueNumber.Tag = "PartUniqueNumber";
+            this.textBoxUniqueNumber.TextChanged += new System.EventHandler(this.textBoxUniqueNumber_TextChanged);
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(40, 18);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(100, 38);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Уникален номер:";
             // 
             // MainView
             // 

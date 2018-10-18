@@ -214,7 +214,6 @@
                     Image img = Image.FromFile(fileName);
                     currentImage = Images.AddLast(img);
                     pictureBox1.Image = currentImage.Value;
-
                     EnableDisableBackwardsAndForwardButtons();
                 }
                 else

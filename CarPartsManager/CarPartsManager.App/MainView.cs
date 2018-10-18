@@ -292,5 +292,29 @@
             bindingSource1.DataSource = dataToShow;
             dataGridView1.Refresh();
         }
+
+        private void buttonDetails_Click(object sender, EventArgs e)
+        {
+            var detailsFor = bindingSource1.Current as CarPartsViewHelper;
+            if (detailsFor == null)
+            {
+                MessageBox.Show("Няма избрана част за редакция. Моля изберете част и опитайте отново.", "Няма избрана част за редакция.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var viewControl = new DetailsControl();
+            viewControl.Dock = DockStyle.Fill;
+            var schemes = CarPartsSchemeService.GetCarPartsSchemesByPartId(detailsFor.PartId);
+            viewControl.Images = new LinkedList<Image>(ConvertCarPartsSchemeHelperHelpersToImages(schemes));
+            viewControl.CarPartInfo = detailsFor;
+
+            var dialog = new GeneralForm();
+            dialog.Text = "Информация за " + detailsFor.PartName;
+            dialog.Size = viewControl.Size;
+
+            dialog.Controls.Add(viewControl);
+            viewControl.BringToFront();
+            dialog.ShowDialog();
+        }
     }
 }
