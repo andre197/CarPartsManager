@@ -73,6 +73,26 @@ namespace CarPartsManager.App.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap backwards_button {
+            get {
+                object obj = ResourceManager.GetObject("backwards_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Default_image {
+            get {
+                object obj = ResourceManager.GetObject("Default_image", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap delete_button {
             get {
                 object obj = ResourceManager.GetObject("delete_button", resourceCulture);
@@ -93,9 +113,29 @@ namespace CarPartsManager.App.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap forward_button {
+            get {
+                object obj = ResourceManager.GetObject("forward_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap info_button {
             get {
                 object obj = ResourceManager.GetObject("info_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap search_button {
+            get {
+                object obj = ResourceManager.GetObject("search_button", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -31,6 +31,11 @@
                 return false;
             }
 
+            if (string.IsNullOrEmpty(control.Text) || string.IsNullOrWhiteSpace(control.Text))
+            {
+                return false;
+            }
+
             var carPart = _entity.CarParts.FirstOrDefault(cp => cp.UniqueNumber == control.Text);
 
             if (_isNew && carPart == null)

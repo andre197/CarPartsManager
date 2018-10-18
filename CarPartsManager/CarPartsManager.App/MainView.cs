@@ -6,12 +6,18 @@
     using Logic.Implementations;
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.IO;
     using System.Linq;
+    using System.Linq.Dynamic;
     using System.Windows.Forms;
 
     public partial class MainView : Form
     {
         private List<CarPartsViewHelper> dataSource;
+        private bool isAscending = false;
+        private Dictionary<string, string> filter = new Dictionary<string, string>();
 
         public IEntityService EntityService { get; set; }
         public ICarPartsService CarPartsService { get; set; }
@@ -25,6 +31,13 @@
             EntityService = new EntityService();
             CarPartsSchemeService = new CarPartsSchemesService();
             CarPartsService.EntityService = EntityService;
+            CarPartsSchemeService.EntityService = EntityService;
+            panelSearch.Visible = false;
+        }
+
+        private void button1_MouseHover(object sender, EventArgs e)
+        {
+            ShowToolTip("Търсене", sender);
         }
 
         private void buttonAdd_MouseHover(object sender, EventArgs e)
@@ -72,6 +85,11 @@
             HideToolTip(sender);
         }
 
+        private void buttonSearch_MouseLeave(object sender, EventArgs e)
+        {
+            HideToolTip(sender);
+        }
+
         private void HideToolTip(object sender)
         {
             toolTipAddButton.Hide((Control)sender);
@@ -105,9 +123,49 @@
             {
                 var carPart = CarPartsService.AddEditPart(viewControl.CarPartsView);
                 bindingSource1.Add(carPart);
+
+                IEnumerable<CarPartsSchemeHelper> schemes = ConvertImagesToCarPartsSchemeHelperHelpers(viewControl.Images, carPart.PartId);
+                CarPartsSchemeService.AddCarPartSchemes(schemes);
             }
 
             dataGridView1.Refresh();
+        }
+
+        private IEnumerable<CarPartsSchemeHelper> ConvertImagesToCarPartsSchemeHelperHelpers(IEnumerable<Image> images, int partId)
+        {
+            var res = new List<CarPartsSchemeHelper>();
+            MemoryStream ms;
+
+            foreach (var item in images)
+            {
+                using (ms = new MemoryStream())
+                {
+                    item.Save(ms, item.RawFormat);
+
+                    res.Add(new CarPartsSchemeHelper()
+                    {
+                        PartId = partId,
+                        Scheme = ms.ToArray()
+                    });
+                }
+            }
+
+            return res;
+        }
+        private IEnumerable<Image> ConvertCarPartsSchemeHelperHelpersToImages(IEnumerable<CarPartsSchemeHelper> images)
+        {
+            var res = new List<Image>();
+            MemoryStream ms;
+
+            foreach (var item in images)
+            {
+                using (ms = new MemoryStream(item.Scheme, 0, item.Scheme.Length))
+                {
+                    res.Add(Image.FromStream(ms));
+                }
+            }
+
+            return res;
         }
 
         private void buttonEdit_Click(object sender, EventArgs e)
@@ -119,6 +177,9 @@
                 return;
             }
 
+            var schemes = CarPartsSchemeService.GetCarPartsSchemesByPartId(partToEdit.PartId);
+            var images = ConvertCarPartsSchemeHelperHelpersToImages(schemes);
+
             var viewControl = new AddEditPartsControl();
             viewControl.CarPartsSchemeService = CarPartsSchemeService;
             viewControl.CarPartsService = CarPartsService;
@@ -126,6 +187,8 @@
             viewControl.IsNew = false;
             viewControl.Dock = DockStyle.Fill;
             viewControl.CarPartsView = partToEdit;
+            viewControl.Images = new LinkedList<Image>(images);
+
             var dialog = new GeneralForm();
             dialog.Text = "Редактиране на част";
             dialog.Size = viewControl.Size;
@@ -137,7 +200,11 @@
 
             if (res == DialogResult.OK && viewControl.CarPartsView != null)
             {
-                CarPartsService.AddEditPart(viewControl.CarPartsView);
+                var carPart = CarPartsService.AddEditPart(viewControl.CarPartsView);
+
+                CarPartsSchemeService.DeleteSchemesForPart(carPart.PartId);
+                schemes = ConvertImagesToCarPartsSchemeHelperHelpers(viewControl.Images, carPart.PartId);
+                CarPartsSchemeService.AddCarPartSchemes(schemes);
             }
 
             dataGridView1.Refresh();
@@ -159,6 +226,71 @@
                 dataGridView1.Refresh();
                 MessageBox.Show($"Част {partName} беше изтрита успешно.", "Изтриване на част", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            var sortString = dataGridView1.Columns[e.ColumnIndex].DataPropertyName;
+
+            sortString += (isAscending ? " DESC" : " ASC");
+            isAscending = !isAscending;
+
+            var currentData = (List<CarPartsViewHelper>)bindingSource1.DataSource;
+            bindingSource1.DataSource = currentData.OrderBy(sortString).ToList();
+
+            dataGridView1.Refresh();
+        }
+
+        private void buttonSearch_Click(object sender, EventArgs e)
+        {
+            panelSearch.Visible = !panelSearch.Visible;
+        }
+
+        private void textBoxUniqueNumber_TextChanged(object sender, EventArgs e)
+        {
+            if (!(sender is TextBox tb))
+            {
+                return;
+            }
+
+            var propName = tb.Tag.ToString();
+            if (!filter.ContainsKey(propName))
+            {
+                filter.Add(propName, "");
+            }
+
+            filter[propName] = tb.Text;
+
+            Filter();
+        }
+
+        private void Filter()
+        {
+            var whereString = "";
+            foreach (var item in filter)
+            {
+                if (string.IsNullOrEmpty(item.Value) || string.IsNullOrWhiteSpace(item.Value))
+                {
+                    continue;
+                }
+
+                whereString += item.Key + ".Contains(\"" + item.Value + "\") and ";
+            }
+
+            if (whereString.EndsWith(" and "))
+            {
+                var indexOfAnd = whereString.LastIndexOf(" and ");
+                whereString = whereString.Substring(0, indexOfAnd);
+            }
+
+            var dataToShow = dataSource;
+            if (whereString != "")
+            {
+                dataToShow = dataSource.AsEnumerable().Where(whereString).ToList();
+            }
+
+            bindingSource1.DataSource = dataToShow;
+            dataGridView1.Refresh();
         }
     }
 }

@@ -31,8 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.labelMaker = new System.Windows.Forms.Label();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.buttonAddMaker = new System.Windows.Forms.Button();
-            this.buttonAddModel = new System.Windows.Forms.Button();
             this.comboBoxModel = new System.Windows.Forms.ComboBox();
             this.labelModel = new System.Windows.Forms.Label();
             this.labelType = new System.Windows.Forms.Label();
@@ -45,8 +43,15 @@
             this.buttonSchemeSearch = new System.Windows.Forms.Button();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemRemoveImage = new System.Windows.Forms.ToolStripMenuItem();
+            this.buttonDelete = new System.Windows.Forms.Button();
+            this.buttonBackwards = new System.Windows.Forms.Button();
+            this.buttonForward = new System.Windows.Forms.Button();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.buttonAddModel = new System.Windows.Forms.Button();
+            this.buttonAddMaker = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // labelMaker
@@ -64,40 +69,18 @@
             this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(173, 10);
+            this.comboBox1.Location = new System.Drawing.Point(399, 10);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(184, 24);
             this.comboBox1.TabIndex = 1;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // buttonAddMaker
-            // 
-            this.buttonAddMaker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddMaker.Image = global::CarPartsManager.App.Properties.Resources.add_button;
-            this.buttonAddMaker.Location = new System.Drawing.Point(388, 9);
-            this.buttonAddMaker.Name = "buttonAddMaker";
-            this.buttonAddMaker.Size = new System.Drawing.Size(25, 25);
-            this.buttonAddMaker.TabIndex = 2;
-            this.buttonAddMaker.UseVisualStyleBackColor = true;
-            this.buttonAddMaker.Click += new System.EventHandler(this.buttonAddMaker_Click);
-            // 
-            // buttonAddModel
-            // 
-            this.buttonAddModel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonAddModel.Image = global::CarPartsManager.App.Properties.Resources.add_button;
-            this.buttonAddModel.Location = new System.Drawing.Point(388, 54);
-            this.buttonAddModel.Name = "buttonAddModel";
-            this.buttonAddModel.Size = new System.Drawing.Size(25, 25);
-            this.buttonAddModel.TabIndex = 5;
-            this.buttonAddModel.UseVisualStyleBackColor = true;
-            this.buttonAddModel.Click += new System.EventHandler(this.buttonAddModel_Click);
             // 
             // comboBoxModel
             // 
             this.comboBoxModel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBoxModel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxModel.FormattingEnabled = true;
-            this.comboBoxModel.Location = new System.Drawing.Point(173, 55);
+            this.comboBoxModel.Location = new System.Drawing.Point(399, 55);
             this.comboBoxModel.Name = "comboBoxModel";
             this.comboBoxModel.Size = new System.Drawing.Size(184, 24);
             this.comboBoxModel.TabIndex = 4;
@@ -124,7 +107,7 @@
             // textBoxPartName
             // 
             this.textBoxPartName.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxPartName.Location = new System.Drawing.Point(173, 98);
+            this.textBoxPartName.Location = new System.Drawing.Point(399, 98);
             this.textBoxPartName.Name = "textBoxPartName";
             this.textBoxPartName.Size = new System.Drawing.Size(184, 22);
             this.textBoxPartName.TabIndex = 10;
@@ -141,7 +124,7 @@
             // numericUpDown1
             // 
             this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown1.Location = new System.Drawing.Point(173, 133);
+            this.numericUpDown1.Location = new System.Drawing.Point(399, 133);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(184, 22);
             this.numericUpDown1.TabIndex = 12;
@@ -150,7 +133,7 @@
             // textBoxUniqueNumber
             // 
             this.textBoxUniqueNumber.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxUniqueNumber.Location = new System.Drawing.Point(173, 172);
+            this.textBoxUniqueNumber.Location = new System.Drawing.Point(399, 172);
             this.textBoxUniqueNumber.Name = "textBoxUniqueNumber";
             this.textBoxUniqueNumber.Size = new System.Drawing.Size(184, 22);
             this.textBoxUniqueNumber.TabIndex = 14;
@@ -176,12 +159,13 @@
             // buttonSchemeSearch
             // 
             this.buttonSchemeSearch.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonSchemeSearch.Location = new System.Drawing.Point(173, 224);
+            this.buttonSchemeSearch.Location = new System.Drawing.Point(399, 224);
             this.buttonSchemeSearch.Name = "buttonSchemeSearch";
-            this.buttonSchemeSearch.Size = new System.Drawing.Size(184, 23);
+            this.buttonSchemeSearch.Size = new System.Drawing.Size(184, 27);
             this.buttonSchemeSearch.TabIndex = 16;
             this.buttonSchemeSearch.Text = "Търсене...";
             this.buttonSchemeSearch.UseVisualStyleBackColor = true;
+            this.buttonSchemeSearch.Click += new System.EventHandler(this.buttonSchemeSearch_Click);
             // 
             // contextMenuStrip1
             // 
@@ -197,10 +181,85 @@
             this.toolStripMenuItemRemoveImage.Size = new System.Drawing.Size(241, 24);
             this.toolStripMenuItemRemoveImage.Text = "Премахване на снимка";
             // 
+            // buttonDelete
+            // 
+            this.buttonDelete.Image = global::CarPartsManager.App.Properties.Resources.delete_button;
+            this.buttonDelete.Location = new System.Drawing.Point(307, 590);
+            this.buttonDelete.Name = "buttonDelete";
+            this.buttonDelete.Size = new System.Drawing.Size(25, 27);
+            this.buttonDelete.TabIndex = 20;
+            this.buttonDelete.UseVisualStyleBackColor = true;
+            this.buttonDelete.Click += new System.EventHandler(this.buttonDelete_Click);
+            // 
+            // buttonBackwards
+            // 
+            this.buttonBackwards.Image = global::CarPartsManager.App.Properties.Resources.backwards_button;
+            this.buttonBackwards.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.buttonBackwards.Location = new System.Drawing.Point(129, 591);
+            this.buttonBackwards.Name = "buttonBackwards";
+            this.buttonBackwards.Size = new System.Drawing.Size(116, 27);
+            this.buttonBackwards.TabIndex = 19;
+            this.buttonBackwards.Text = "Назад";
+            this.buttonBackwards.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            this.buttonBackwards.UseVisualStyleBackColor = true;
+            this.buttonBackwards.Click += new System.EventHandler(this.buttonBackwards_Click);
+            // 
+            // buttonForward
+            // 
+            this.buttonForward.Image = global::CarPartsManager.App.Properties.Resources.forward_button;
+            this.buttonForward.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.buttonForward.Location = new System.Drawing.Point(383, 591);
+            this.buttonForward.Name = "buttonForward";
+            this.buttonForward.Size = new System.Drawing.Size(120, 27);
+            this.buttonForward.TabIndex = 18;
+            this.buttonForward.Text = "Напред";
+            this.buttonForward.TextAlign = System.Drawing.ContentAlignment.TopLeft;
+            this.buttonForward.UseVisualStyleBackColor = true;
+            this.buttonForward.Click += new System.EventHandler(this.buttonForward_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.White;
+            this.pictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBox1.Cursor = System.Windows.Forms.Cursors.Default;
+            this.pictureBox1.Image = global::CarPartsManager.App.Properties.Resources.Default_image;
+            this.pictureBox1.Location = new System.Drawing.Point(129, 272);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(374, 301);
+            this.pictureBox1.TabIndex = 17;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.buttonSchemeSearch_Click);
+            // 
+            // buttonAddModel
+            // 
+            this.buttonAddModel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddModel.Image = global::CarPartsManager.App.Properties.Resources.add_button;
+            this.buttonAddModel.Location = new System.Drawing.Point(614, 54);
+            this.buttonAddModel.Name = "buttonAddModel";
+            this.buttonAddModel.Size = new System.Drawing.Size(25, 25);
+            this.buttonAddModel.TabIndex = 5;
+            this.buttonAddModel.UseVisualStyleBackColor = true;
+            this.buttonAddModel.Click += new System.EventHandler(this.buttonAddModel_Click);
+            // 
+            // buttonAddMaker
+            // 
+            this.buttonAddMaker.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonAddMaker.Image = global::CarPartsManager.App.Properties.Resources.add_button;
+            this.buttonAddMaker.Location = new System.Drawing.Point(614, 9);
+            this.buttonAddMaker.Name = "buttonAddMaker";
+            this.buttonAddMaker.Size = new System.Drawing.Size(25, 25);
+            this.buttonAddMaker.TabIndex = 2;
+            this.buttonAddMaker.UseVisualStyleBackColor = true;
+            this.buttonAddMaker.Click += new System.EventHandler(this.buttonAddMaker_Click);
+            // 
             // AddEditPartsControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.buttonDelete);
+            this.Controls.Add(this.buttonBackwards);
+            this.Controls.Add(this.buttonForward);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.buttonSchemeSearch);
             this.Controls.Add(this.labelScheme);
             this.Controls.Add(this.textBoxUniqueNumber);
@@ -216,11 +275,12 @@
             this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.labelMaker);
             this.Name = "AddEditPartsControl";
-            this.Size = new System.Drawing.Size(416, 387);
+            this.Size = new System.Drawing.Size(642, 742);
             this.Load += new System.EventHandler(this.AddEditPartsControl_Load);
             this.Leave += new System.EventHandler(this.AddEditPartsControl_Leave);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -244,5 +304,9 @@
         private System.Windows.Forms.Button buttonSchemeSearch;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemRemoveImage;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.Button buttonForward;
+        private System.Windows.Forms.Button buttonBackwards;
+        private System.Windows.Forms.Button buttonDelete;
     }
 }

@@ -5,12 +5,16 @@
     using Logic.Helpers;
     using System;
     using System.Collections.Generic;
+    using System.Drawing;
+    using System.IO;
     using System.Linq;
     using System.Windows.Forms;
     using Validations;
 
     public partial class AddEditPartsControl : BaseControl
     {
+        private LinkedListNode<Image> currentImage;
+
         public AddEditPartsControl()
         {
             InitializeComponent();
@@ -21,9 +25,11 @@
         public ICarPartsService CarPartsService { get; set; }
         public ICarPartsSchemesService CarPartsSchemeService { get; set; }
         public CarPartsViewHelper CarPartsView { get; set; }
+        public LinkedList<Image> Images { get; set; } = new LinkedList<Image>();
 
         private void AddEditPartsControl_Load(object sender, EventArgs e)
         {
+            EnableDisableBackwardsAndForwardButtons();
             SetMakerComboboxItems();
 
             if (!IsNew)
@@ -61,6 +67,9 @@
                 var uniqueNumberValidationRule = new UniqueNumberValidationRule(EntityService.GetEntities(), CarPartsView.PartId, false);
                 uniqueNumberValidationRule.ErrorMessage = "Вече съществува част със този уникален номер или полето е празно!";
                 Validator.AddValidation(textBoxUniqueNumber, uniqueNumberValidationRule);
+                currentImage = Images.First;
+                pictureBox1.Image = currentImage.Value;
+                EnableDisableBackwardsAndForwardButtons();
             }
             else
             {
@@ -80,6 +89,10 @@
             var modelComboboxValidationRule = new ComboboxSelectedItemValidationRule();
             modelComboboxValidationRule.ErrorMessage = "Не е избран модел!";
             Validator.AddValidation(comboBoxModel, modelComboboxValidationRule);
+
+            var schemesValidationRule = new SchemesValidationRule();
+            schemesValidationRule.ErrorMessage = "Моля изберете поне една схема за тази част";
+            Validator.AddValidation(pictureBox1, schemesValidationRule);
         }
 
         private void SetModelComboboxItems()
@@ -96,6 +109,11 @@
 
         private void AddEditPartsControl_Leave(object sender, EventArgs e)
         {
+            if (!Validator.Validate())
+            {
+                return;
+            }
+            
             if (IsNew)
             {
                 CarMakerHelper maker = (CarMakerHelper)comboBox1.SelectedItem;
@@ -177,6 +195,105 @@
                 comboBoxModel.Items.Add(item);
                 comboBoxModel.SelectedItem = item;
             }
+        }
+        
+        private void buttonSchemeSearch_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Image|*.png;*.gif;*.jpg;*.jpeg" +
+                         "|All files|*.*";
+
+            ofd.CheckFileExists = true;
+            var res = ofd.ShowDialog();
+
+            if (res == DialogResult.OK)
+            {
+                var fileName = ofd.FileName;
+                if (File.Exists(fileName))
+                {
+                    Image img = Image.FromFile(fileName);
+                    currentImage = Images.AddLast(img);
+                    pictureBox1.Image = currentImage.Value;
+
+                    EnableDisableBackwardsAndForwardButtons();
+                }
+                else
+                {
+                    MessageBox.Show("Избрания файл не съществува! Моля опитайте отвново.", "Избор на файл", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+        private void buttonBackwards_Click(object sender, EventArgs e)
+        {
+            currentImage = currentImage.Previous;
+            pictureBox1.Image = currentImage.Value;
+            EnableDisableBackwardsAndForwardButtons();
+        }
+
+        private void EnableDisableBackwardsAndForwardButtons()
+        {
+            if (currentImage == null)
+            {
+                buttonBackwards.Enabled = false;
+                buttonForward.Enabled = false;
+                buttonDelete.Enabled = false;
+                return;
+            }
+            else
+            {
+                buttonDelete.Enabled = true;
+            }
+            if (currentImage.Previous == null)
+            {
+                buttonBackwards.Enabled = false;
+            }
+            else
+            {
+                buttonBackwards.Enabled = true;
+            }
+            if (currentImage.Next == null)
+            {
+                buttonForward.Enabled = false;
+            }
+            else
+            {
+                buttonForward.Enabled = true;
+            }
+        }
+
+        private void buttonForward_Click(object sender, EventArgs e)
+        {
+            currentImage = currentImage.Next;
+            pictureBox1.Image = currentImage.Value;
+            EnableDisableBackwardsAndForwardButtons();
+        }
+
+        private void buttonDelete_Click(object sender, EventArgs e)
+        {
+            if (currentImage.Previous == null && currentImage.Next == null)
+            {
+                Images.Remove(currentImage);
+                currentImage = null;
+                pictureBox1.Image = Properties.Resources.Default_image;
+                EnableDisableBackwardsAndForwardButtons();
+                return;
+            }
+            else if (currentImage.Previous == null)
+            {
+                var imageToBeCurrent = currentImage.Next;
+                Images.Remove(currentImage);
+                currentImage = imageToBeCurrent;
+            }
+            else if (currentImage.Next == null)
+            {
+                var imageToBeCurrent = currentImage.Previous;
+                Images.Remove(currentImage);
+                currentImage = imageToBeCurrent;
+            }
+
+            pictureBox1.Image = currentImage.Value;
+            EnableDisableBackwardsAndForwardButtons();
         }
     }
 }
