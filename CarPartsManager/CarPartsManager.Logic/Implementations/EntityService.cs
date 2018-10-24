@@ -11,6 +11,10 @@
             if (entities == null)
             {
                 entities = new CarPartsManagerEntities();
+                if (!entities.Database.Exists())
+                {
+                    entities.Database.Create();
+                }
             }
 
             return entities;

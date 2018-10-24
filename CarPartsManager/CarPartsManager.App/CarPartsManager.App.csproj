@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>images_6fF_icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
     <Reference Include="System" />
@@ -180,6 +183,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\print_button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\images_6fF_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="images_6fF_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
