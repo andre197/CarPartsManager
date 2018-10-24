@@ -133,6 +133,16 @@ namespace CarPartsManager.App.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap print_button {
+            get {
+                object obj = ResourceManager.GetObject("print_button", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap search_button {
             get {
                 object obj = ResourceManager.GetObject("search_button", resourceCulture);
